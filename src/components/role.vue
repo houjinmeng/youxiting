@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button type="primary" @click.stop="dialogVisibleadd = true"
-      >添加商户</el-button
+      >添加角色</el-button
     >
     <el-table
       :data="tableData"
@@ -12,14 +12,13 @@
       <el-table-column
         type="index"
         label="序号"
-        width="200"
         align="center"
       ></el-table-column>
-      <el-table-column prop="name" label="商户名称" align="center">
+      <el-table-column prop="role" label="角色名" align="center">
       </el-table-column>
-      <el-table-column prop="address" label="联系人" align="center">
+      <el-table-column prop="address" label="所属单位" align="center">
       </el-table-column>
-      <el-table-column prop="address" label="手机号" align="center">
+      <el-table-column prop="address" label="权限" align="center">
       </el-table-column>
       <el-table-column prop="status" label="状态" align="center">
         <el-switch
@@ -42,29 +41,27 @@
       </el-table-column>
     </el-table>
     <!-- 商户详情弹框 -->
-    <el-dialog title="商户详情" :visible.sync="dialogVisible" width="30%">
-      <div>商户名:张三</div>
-      <div>联系人:李四</div>
-      <div>联系电话:158689865564</div>
-      <div>地址:朝阳区望京</div>
-      <div>状态:启用</div>
-      <div>管理员数量:2</div>
+    <el-dialog title="角色详情" :visible.sync="dialogVisible" width="30%">
+      <div>角色名:店长</div>
+      <div>所属单位:旺角广场店</div>
+      <div>账户数:3</div>
     </el-dialog>
     <!-- 添加商户弹框 -->
-    <el-dialog title="添加商户" :visible.sync="dialogVisibleadd" width="30%">
+    <el-dialog title="添加角色" :visible.sync="dialogVisibleadd" width="30%">
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="商户民">
+        <el-form-item label="角色名">
           <el-input v-model="form.name" style="width:50%"></el-input>
         </el-form-item>
-        <el-form-item label="用户列表">
-          <el-select v-model="form.region" placeholder="请选择活动区域" style="width:50%">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+        <el-form-item label="权限">
+          <el-input v-model="form.name" style="width:50%"></el-input>
+        </el-form-item>
+      <el-form-item label="管理范围">
+          <el-select v-model="form.region" placeholder="请选择管理范围" style="width:50%">
+            <el-option label="望京店" value="shanghai"></el-option>
+            <el-option label="旺角店" value="beijing"></el-option>
           </el-select> </el-form-item
       >
-      <el-form-item label="地址">
-          <el-input v-model="form.name" style="width:50%"></el-input>
-        </el-form-item></el-form>
+        </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisibleadd = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisibleadd = false"
@@ -73,20 +70,21 @@
       </span>
     </el-dialog>
     <!-- 修改商户信息 -->
-     <el-dialog title="修改商户信息" :visible.sync="dialogVisibleedit" width="30%">
-      <el-form ref="form" :model="form" label-width="100px">
-        <el-form-item label="商户民">
+     <el-dialog title="修改角色信息" :visible.sync="dialogVisibleedit" width="30%">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="角色名">
           <el-input v-model="form.name" style="width:50%" disabled=""></el-input>
         </el-form-item>
-        <el-form-item label="商户管理员">
-          <el-select v-model="form.region" placeholder="请选择活动区域" style="width:50%">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+        <el-form-item label="权限">
+          <el-input v-model="form.name" style="width:50%"></el-input>
+        </el-form-item>
+      <el-form-item label="管理范围">
+          <el-select v-model="form.region" placeholder="请选择管理范围" style="width:50%">
+            <el-option label="望京店" value="shanghai"></el-option>
+            <el-option label="旺角店" value="beijing"></el-option>
           </el-select> </el-form-item
       >
-      <el-form-item label="地址">
-          <el-input v-model="form.name" style="width:50%"></el-input>
-        </el-form-item></el-form>
+        </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisibleedit = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisibleedit = false"
@@ -105,24 +103,39 @@ export default {
         {
           date: '2016-05-02',
           name: '王小虎',
+          username:'大海',
+          phone:'1234879454',
+          role:'经理',
           address: '上海市普陀区金沙江路 1518 弄',
           status: 0
         },
-        {
-          date: '2016-05-04',
+         {
+          date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
+          username:'大海',
+          phone:'1234879454',
+          role:'经理',
+          address: '上海市普陀区金沙江路 1518 弄',
+          status: 0
         },
-        {
-          date: '2016-05-01',
+         {
+          date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
+          username:'大海',
+          phone:'1234879454',
+          role:'经理',
+          address: '上海市普陀区金沙江路 1518 弄',
+          status: 0
         },
-        {
-          date: '2016-05-03',
+         {
+          date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
+          username:'大海',
+          phone:'1234879454',
+          role:'经理',
+          address: '上海市普陀区金沙江路 1518 弄',
+          status: 0
+        },
       ],
       // 详情弹窗
       dialogVisible: false,
@@ -144,7 +157,7 @@ export default {
     },
     // 删除用户
     del(id) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该角色, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

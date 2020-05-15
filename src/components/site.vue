@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-button type="primary" @click.stop="dialogVisibleadd = true"
-      >添加商户</el-button
+      >添加场地</el-button
     >
     <el-table
       :data="tableData"
@@ -15,7 +15,7 @@
         width="200"
         align="center"
       ></el-table-column>
-      <el-table-column prop="name" label="商户名称" align="center">
+      <el-table-column prop="name" label="场地名称" align="center">
       </el-table-column>
       <el-table-column prop="address" label="联系人" align="center">
       </el-table-column>
@@ -30,6 +30,8 @@
           @change="changeState(info.row.id)"
         ></el-switch>
       </el-table-column>
+      <el-table-column prop="address" label="地址" align="center">
+      </el-table-column>
       <el-table-column prop="address" label="操作" align="center">
         <template slot-scope="info">
           <el-button size="mini" style="background-color:#0e9692;color:#fff" @click.stop="dialogVisibleedit=true"
@@ -42,22 +44,25 @@
       </el-table-column>
     </el-table>
     <!-- 商户详情弹框 -->
-    <el-dialog title="商户详情" :visible.sync="dialogVisible" width="30%">
-      <div>商户名:张三</div>
+    <el-dialog title="场地详情" :visible.sync="dialogVisible" width="30%">
+      <div>场地名:旺角广场</div>
       <div>联系人:李四</div>
       <div>联系电话:158689865564</div>
       <div>地址:朝阳区望京</div>
       <div>状态:启用</div>
-      <div>管理员数量:2</div>
+      <div>员工数量:2</div>
+      <div>设备数量:45</div>
+      <div>游戏机数量:55</div>
+      <div>卡头数量:44</div>
     </el-dialog>
     <!-- 添加商户弹框 -->
-    <el-dialog title="添加商户" :visible.sync="dialogVisibleadd" width="30%">
+    <el-dialog title="添加场地" :visible.sync="dialogVisibleadd" width="30%">
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="商户民">
+        <el-form-item label="场地名">
           <el-input v-model="form.name" style="width:50%"></el-input>
         </el-form-item>
-        <el-form-item label="用户列表">
-          <el-select v-model="form.region" placeholder="请选择活动区域" style="width:50%">
+        <el-form-item label="场地经理">
+          <el-select v-model="form.region" placeholder="请选择场地经理" style="width:50%">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select> </el-form-item
@@ -73,13 +78,13 @@
       </span>
     </el-dialog>
     <!-- 修改商户信息 -->
-     <el-dialog title="修改商户信息" :visible.sync="dialogVisibleedit" width="30%">
+     <el-dialog title="修改场地信息" :visible.sync="dialogVisibleedit" width="30%">
       <el-form ref="form" :model="form" label-width="100px">
-        <el-form-item label="商户民">
+        <el-form-item label="场地名">
           <el-input v-model="form.name" style="width:50%" disabled=""></el-input>
         </el-form-item>
-        <el-form-item label="商户管理员">
-          <el-select v-model="form.region" placeholder="请选择活动区域" style="width:50%">
+        <el-form-item label="场地管理员">
+          <el-select v-model="form.region" placeholder="请选择场地经理" style="width:50%">
             <el-option label="区域一" value="shanghai"></el-option>
             <el-option label="区域二" value="beijing"></el-option>
           </el-select> </el-form-item
@@ -144,7 +149,7 @@ export default {
     },
     // 删除用户
     del(id) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该场地, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

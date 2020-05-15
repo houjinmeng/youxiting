@@ -3,7 +3,7 @@
     <el-header>
       <div id="logo-box">
         <img src="../assets/image/heima.png" alt />
-        <span>电商后台管理系统</span>
+        <span>游戏厅后台管理系统</span>
       </div>
       <el-button type="info" @click="logoout">退出</el-button>
     </el-header>
@@ -27,6 +27,10 @@
           :collapse-transition="false"
           :router="true"
         >
+          <!-- <el-menu-item index="home" @click.native="getRouter">
+            <i style="margin-right:10px" :class="'iconfont icon-' + 'user'"></i>
+            <span>首页</span>
+          </el-menu-item> -->
           <el-submenu
             :index="item.id + ''"
             v-for="(item, k) in menuList"
@@ -40,6 +44,7 @@
               :index="item2.path"
               v-for="item2 in item.children"
               :key="item2.id"
+              @click.native="getRouter(item, item2)"
             >
               <i style="margin-right:10px"></i>
               <span>{{ item2.authName }}</span>
@@ -48,13 +53,12 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb separator="/" style="margin-bottom:18px">
           <el-breadcrumb-item
             v-for="item in breadList"
             :to="{ path: item.path }"
             :key="item.name"
-            @click.native="getRouter(item.path, item.name)"
+            @click.native="getRouter1(item.path, item.name)"
             >{{ item.name }}</el-breadcrumb-item
           >
         </el-breadcrumb>
@@ -73,7 +77,7 @@ export default {
   computed: {
     breadList() {
       let dataArr = []
-      if (this.$store.state.myRouter.length !== 1) {
+      if (this.$store.state.myRouter.length !== 0) {
         dataArr = this.$store.state.myRouter
       } else {
         dataArr = JSON.parse(sessionStorage.getItem('myRouter'))
@@ -87,98 +91,45 @@ export default {
       //  左侧导航菜单数据
       menuList: [
         {
-          id: 1,
-          authName: '账号管理',
-          path: null,
-          children: [
-            {
-              id: 8,
-              authName: '账号列表',
-              path: 'account',
-              children: []
-            }
-          ]
-        },
-        {
           id: 2,
-          authName: '用户管理',
+          authName: '商户管理',
           path: null,
           children: [
             {
               id: 9,
-              authName: '用户列表',
-              path: 'users',
-              children: []
+              authName: '商户列表',
+              path: 'users'
             }
           ]
         },
         {
           id: 3,
-          authName: '审核管理',
+          authName: '场地管理',
           path: null,
           children: [
             {
               id: 10,
-              authName: '审核列表',
-              path: 'check',
+              authName: '场地列表',
+              path: 'site',
               children: []
             }
           ]
         },
         {
           id: 4,
-          authName: '设备管理',
+          authName: '人员管理',
           path: null,
           children: [
             {
               id: 11,
-              authName: '设备列表',
-              path: 'machine',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 5,
-          authName: '价格管理',
-          path: null,
-          children: [
-            {
-              id: 12,
-              authName: '价格设置',
-              path: 'price',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 6,
-          authName: '订单管理',
-          path: null,
-          children: [
-            {
-              id: 13,
-              authName: '订单列表',
-              path: 'order',
-              children: []
-            }
-          ]
-        },
-        {
-          id: 7,
-          authName: '统计管理',
-          path: null,
-          children: [
-            {
-              id: 14,
-              authName: '投放统计',
-              path: 'statistics',
+              authName: '人员列表',
+              path: 'people',
               children: []
             },
             {
-              id: 15,
-              authName: '营销号统计',
-              path: 'marketing',
+              id: 12,
+              authName: '角色列表',
+              path: 'role',
               children: []
             }
           ]
@@ -189,9 +140,18 @@ export default {
   },
   methods: {
     ...mapActions(['routerFun']),
-    getRouter(path, name) {
-      let obj = { path, name }
+    getRouter(item1, item2) {
+      let obj = [
+        { path: item1.path, name: item1.authName },
+        { path: item2.path, name: item2.authName }
+      ]
       this.routerFun(obj) //调用vuex中的方法
+    },
+    getRouter1(path, name) {
+      if (name == '首页') {
+        let obj = []
+        this.routerFun(obj) //调用vuex中的方法
+      }
     },
     logoout() {
       this.$confirm('确定要退出系统吗？', '提示', {
